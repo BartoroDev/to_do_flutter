@@ -1,29 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:to_do_flutter/shoppingList.dart';
-import 'products.dart';
 
 class MyBox extends StatefulWidget {
-  List<String> myShoppingLists = [];
-  int myIndex;
-  MyBox(List<String> shoppingLists, int index)
-      : myShoppingLists = shoppingLists,
-        myIndex = index;
+  final List<String> myShoppingLists;
+  final int myIndex;
+  const MyBox(this.myShoppingLists, this.myIndex, {Key? key}) : super(key: key);
 
   @override
-  State createState() => _MyBoxState(myShoppingLists, myIndex);
+  State createState() => _MyBoxState();
 }
 
 class _MyBoxState extends State<MyBox> {
-  List<TextEditingController> myControllers = [TextEditingController()];
-  Color _boxColor = Colors.blueGrey;
-  List<String> _shoppingLists = [];
-  int _index;
-  _MyBoxState(List<String> shoppingLists, int index)
-      : _shoppingLists = shoppingLists,
-        _index = index;
+  List<TextEditingController> myControllers = [];
+  final Color _boxColor = Colors.blueGrey;
 
   @override
   Widget build(BuildContext context) {
+    //myControllers = myControllers ?? [];
     return Container(
         child: Column(
       children: [
@@ -32,7 +25,7 @@ class _MyBoxState extends State<MyBox> {
           mainAxisSize: MainAxisSize.max,
           children: [
             AnimatedContainer(
-              duration: Duration(milliseconds: 200),
+              duration: const Duration(milliseconds: 200),
               width: MediaQuery.of(context).size.width * 0.6,
               height: 80,
               decoration: BoxDecoration(
@@ -52,8 +45,8 @@ class _MyBoxState extends State<MyBox> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Text(_shoppingLists[_index]),
-                    Icon(
+                    Text(widget.myShoppingLists[widget.myIndex]),
+                    const Icon(
                       Icons.edit,
                       size: 30,
                     ),
@@ -63,19 +56,19 @@ class _MyBoxState extends State<MyBox> {
             ),
             GestureDetector(
               onTap: () {
-                //w trakcie dodawania usuwania pudla
-                _shoppingLists.removeAt(_index);
-                print("Usunolem obiekt");
+                //in progress
+                widget.myShoppingLists.removeAt(widget.myIndex);
+                debugPrint("box deleted");
                 setState(() {});
               },
-              child: Icon(
+              child: const Icon(
                 Icons.delete,
                 size: 30,
               ),
             )
           ],
         ),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
       ],
     ));
   }
