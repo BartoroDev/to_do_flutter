@@ -51,9 +51,7 @@ class _homePageState extends State<homePage> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          _addNote();
-        },
+        onPressed: () => _addNote(),
         child: Icon(Icons.add),
       ),
     );

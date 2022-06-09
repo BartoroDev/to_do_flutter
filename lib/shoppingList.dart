@@ -36,9 +36,7 @@ class _ShoppingListState extends State<MyShoppingList> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          _addProduct();
-        },
+        onPressed: () => _addProduct(),
         child: Icon(Icons.add),
       ),
     );
