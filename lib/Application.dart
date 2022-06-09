@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'boxes.dart';
 
 void main() {
-  runApp(const myApp());
+  runApp(const MyApp());
 }
 
-class myApp extends StatelessWidget {
-  const myApp({Key? key}) : super(key: key);
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,26 +15,20 @@ class myApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.teal,
       ),
-      home: const homePage(),
+      home: const HomePage(),
     );
   }
 }
 
-class homePage extends StatefulWidget {
-  const homePage({Key? key}) : super(key: key);
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
 
   @override
-  State<homePage> createState() => _homePageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _homePageState extends State<homePage> {
-  List<String> boxes = [];
-  void _addNote() {
-    boxes.add("pudlo");
-    setState(() {
-      print('Note Added');
-    });
-  }
+class _HomePageState extends State<HomePage> {
+  final List<String> tiles = [];
 
   @override
   Widget build(BuildContext context) {
@@ -44,9 +38,9 @@ class _homePageState extends State<homePage> {
       ),
       body: ListView.builder(
         itemBuilder: (context, index) {
-          return MyBox(boxes, index);
+          return MyBox(tiles, index);
         },
-        itemCount: boxes.length,
+        itemCount: tiles.length,
         padding: EdgeInsets.all(16.0),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -55,5 +49,11 @@ class _homePageState extends State<homePage> {
         child: Icon(Icons.add),
       ),
     );
+  }
+
+  void _addNote() {
+    tiles.add("tile ${tiles.length + 1}");
+    print('Note Added');
+    setState(() {});
   }
 }
