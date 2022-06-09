@@ -2,27 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:to_do_flutter/shoppingList.dart';
 import 'products.dart';
 
-class tmpBox {
-  String title = '';
-
-  tmpBox({String msg = ''}) : title = msg;
-}
-
 class MyBox extends StatefulWidget {
-  String msg = '';
-
-  MyBox(String title) : msg = title;
+  List<String> myShoppingLists = [];
+  int myIndex;
+  MyBox(List<String> shoppingLists, int index)
+      : myShoppingLists = shoppingLists,
+        myIndex = index;
 
   @override
-  State createState() => _MyBoxState(msg);
+  State createState() => _MyBoxState(myShoppingLists, myIndex);
 }
 
 class _MyBoxState extends State<MyBox> {
-  //List<String> products = ["Marchewka", "Jablko", "Mleko"];
   List<TextEditingController> myControllers = [TextEditingController()];
   Color _boxColor = Colors.blueGrey;
-  String _title = '';
-  _MyBoxState(String msg) : _title = msg;
+  List<String> _shoppingLists = [];
+  int _index;
+  _MyBoxState(List<String> shoppingLists, int index)
+      : _shoppingLists = shoppingLists,
+        _index = index;
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +41,7 @@ class _MyBoxState extends State<MyBox> {
               ),
               //podczas animacji rogi tego contenera też się animują, pomimo że ich tam ,,nie ma", jak to naprawic
               child: InkWell(
-                //splashFactory: InkSplash.splashFactory,
+                splashFactory: InkSplash.splashFactory,
                 //splashColor: Colors.pink,
                 onTap: () {
                   Navigator.push(
@@ -54,7 +52,7 @@ class _MyBoxState extends State<MyBox> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Text(_title),
+                    Text(_shoppingLists[_index]),
                     Icon(
                       Icons.edit,
                       size: 30,
@@ -63,10 +61,18 @@ class _MyBoxState extends State<MyBox> {
                 ),
               ),
             ),
-            Icon(
-              Icons.delete,
-              size: 30,
-            ),
+            GestureDetector(
+              onTap: () {
+                //w trakcie dodawania usuwania pudla
+                _shoppingLists.removeAt(_index);
+                print("Usunolem obiekt");
+                setState(() {});
+              },
+              child: Icon(
+                Icons.delete,
+                size: 30,
+              ),
+            )
           ],
         ),
         SizedBox(height: 16),

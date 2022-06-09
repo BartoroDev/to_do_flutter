@@ -28,11 +28,9 @@ class homePage extends StatefulWidget {
 }
 
 class _homePageState extends State<homePage> {
-  List<tmpBox> boxes = [];
+  List<String> boxes = [];
   void _addNote() {
-    boxes.add(tmpBox(
-      msg: "pudlo",
-    ));
+    boxes.add("pudlo");
     setState(() {
       print('Note Added');
     });
@@ -46,7 +44,7 @@ class _homePageState extends State<homePage> {
       ),
       body: ListView.builder(
         itemBuilder: (context, index) {
-          return MyBox(boxes[index].title);
+          return MyBox(boxes, index);
         },
         itemCount: boxes.length,
         padding: EdgeInsets.all(16.0),
