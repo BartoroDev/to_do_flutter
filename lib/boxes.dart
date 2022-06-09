@@ -42,8 +42,6 @@ class _MyBoxState extends State<MyBox> {
               ),
               //podczas animacji rogi tego contenera też się animują, pomimo że ich tam ,,nie ma", jak to naprawic
               child: InkWell(
-                //splashFactory: InkSplash.splashFactory,
-                //splashColor: Colors.pink,
                 onTap: () {
                   showDialog(
                       context: context,
