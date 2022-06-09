@@ -2,25 +2,14 @@ import 'package:flutter/material.dart';
 import 'products.dart';
 
 class MyShoppingList extends StatefulWidget {
-  List<TextEditingController> MyControllers = [];
-  MyShoppingList(List<TextEditingController> controllers)
-      : MyControllers = controllers;
+  final List<TextEditingController> myControllers;
+  const MyShoppingList(this.myControllers, {Key? key}) : super(key: key);
 
   @override
-  State createState() => _ShoppingListState(MyControllers);
+  State createState() => _ShoppingListState();
 }
 
 class _ShoppingListState extends State<MyShoppingList> {
-  List<TextEditingController> _controllers = [];
-
-  void _addProduct() {
-    _controllers.add(TextEditingController());
-    setState(() {});
-  }
-
-  _ShoppingListState(List<TextEditingController> controllers)
-      : _controllers = controllers;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,16 +18,21 @@ class _ShoppingListState extends State<MyShoppingList> {
       ),
       body: ListView.builder(
         itemBuilder: (context, index) {
-          return ProductController(_controllers[index]);
+          return ProductController(widget.myControllers[index]);
         },
-        itemCount: _controllers.length,
-        padding: EdgeInsets.all(16.0),
+        itemCount: widget.myControllers.length,
+        padding: const EdgeInsets.all(16.0),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
         onPressed: () => _addProduct(),
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
+  }
+
+  void _addProduct() {
+    widget.myControllers.add(TextEditingController());
+    setState(() {});
   }
 }
