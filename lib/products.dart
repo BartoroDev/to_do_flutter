@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 
-class ProductList extends StatefulWidget {
+class ProductController extends StatefulWidget {
   String msg = '';
   bool value = false;
   TextEditingController _controller;
 
-  ProductList(TextEditingController controller) : _controller = controller;
+  ProductController(TextEditingController controller)
+      : _controller = controller;
 
   @override
-  State createState() => _ProductList(_controller, value);
+  State createState() => _ProductController(_controller, value);
 }
 
-class _ProductList extends State<ProductList> {
+class _ProductController extends State<ProductController> {
   TextEditingController _controller;
   bool _value = false;
 
-  _ProductList(TextEditingController controller, bool value)
+  _ProductController(TextEditingController controller, bool value)
       : _controller = controller,
         _value = value;
 

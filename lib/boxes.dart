@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:to_do_flutter/shoppingList.dart';
 import 'products.dart';
 
 class tmpBox {
@@ -19,7 +20,7 @@ class MyBox extends StatefulWidget {
 class _MyBoxState extends State<MyBox> {
   //List<String> products = ["Marchewka", "Jablko", "Mleko"];
   List<TextEditingController> myControllers = [TextEditingController()];
-  Color _boxColor = Colors.lightBlue;
+  Color _boxColor = Colors.blueGrey;
   String _title = '';
   _MyBoxState(String msg) : _title = msg;
 
@@ -45,30 +46,10 @@ class _MyBoxState extends State<MyBox> {
                 //splashFactory: InkSplash.splashFactory,
                 //splashColor: Colors.pink,
                 onTap: () {
-                  showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return Scaffold(
-                          //color: Colors.yellow[100],
-                          body: Builder(builder: (BuildContext context) {
-                            return ListView.builder(
-                              itemBuilder: (context, index) {
-                                return ProductList(myControllers[index]);
-                              },
-                              itemCount: myControllers.length,
-                              padding: EdgeInsets.all(16.0),
-                            );
-                          }),
-                          floatingActionButton: FloatingActionButton(
-                            onPressed: () {
-                              myControllers.add(TextEditingController());
-                              setState(() {});
-                            },
-                            child: Icon(Icons.add),
-                          ),
-                        );
-                      });
-                  setState(() {});
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => MyShoppingList(myControllers)));
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
