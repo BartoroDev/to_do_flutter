@@ -1,39 +1,34 @@
 import 'package:flutter/material.dart';
 
 class ProductController extends StatefulWidget {
-  String msg = '';
-  bool value = false;
-  TextEditingController _controller;
+  final bool initialValue = false;
+  final TextEditingController myController;
 
-  ProductController(TextEditingController controller)
-      : _controller = controller;
+  const ProductController(TextEditingController controller, {Key? key})
+      : myController = controller,
+        super(key: key);
 
   @override
-  State createState() => _ProductController(_controller, value);
+  State<ProductController> createState() => _ProductControllerState();
 }
 
-class _ProductController extends State<ProductController> {
-  TextEditingController _controller;
-  bool _value = false;
-
-  _ProductController(TextEditingController controller, bool value)
-      : _controller = controller,
-        _value = value;
+class _ProductControllerState extends State<ProductController> {
+  bool? checkboxValue;
 
   @override
   Widget build(BuildContext context) {
+    checkboxValue = checkboxValue ?? widget.initialValue;
     return CheckboxListTile(
-        title: TextField(
-          controller: _controller,
-          style: TextStyle(
-            decoration: _value ? TextDecoration.lineThrough : null,
-          ),
+      title: TextField(
+        controller: widget.myController,
+        style: TextStyle(
+          decoration: checkboxValue! ? TextDecoration.lineThrough : null,
         ),
-        value: _value,
-        onChanged: (_value) {
-          setState(() {
-            this._value = _value!;
-          });
-        });
+      ),
+      value: checkboxValue,
+      onChanged: (newValue) => setState(() {
+        checkboxValue = newValue ?? checkboxValue;
+      }),
+    );
   }
 }
