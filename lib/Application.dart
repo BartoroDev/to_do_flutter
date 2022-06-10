@@ -53,7 +53,6 @@ class _HomePageState extends State<HomePage> {
 
   void _addNote() {
     tiles.add("tile ${tiles.length + 1}");
-    debugPrint('Note Added');
     setState(() {});
   }
 

@@ -35,7 +35,6 @@ class _MyBoxState extends State<MyBox> {
                 color: _boxColor,
                 borderRadius: BorderRadius.circular(10.0),
               ),
-              //podczas animacji rogi tego contenera też się animują, pomimo że ich tam ,,nie ma", jak to naprawic
               child: InkWell(
                 splashFactory: InkSplash.splashFactory,
                 //splashColor: Colors.pink,
@@ -61,7 +60,6 @@ class _MyBoxState extends State<MyBox> {
               onTap: () {
                 //in progress
                 widget.deleteFunction(widget.myIndex);
-                debugPrint("box deleted");
                 setState(() {});
               },
               child: const Icon(
