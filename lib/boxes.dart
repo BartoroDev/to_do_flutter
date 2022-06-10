@@ -4,7 +4,10 @@ import 'package:to_do_flutter/shoppingList.dart';
 class MyBox extends StatefulWidget {
   final List<String> myShoppingLists;
   final int myIndex;
-  const MyBox(this.myShoppingLists, this.myIndex, {Key? key}) : super(key: key);
+  final Function(int) deleteFunction;
+  const MyBox(this.myShoppingLists, this.myIndex, this.deleteFunction,
+      {Key? key})
+      : super(key: key);
 
   @override
   State createState() => _MyBoxState();
@@ -57,7 +60,7 @@ class _MyBoxState extends State<MyBox> {
             GestureDetector(
               onTap: () {
                 //in progress
-                widget.myShoppingLists.removeAt(widget.myIndex);
+                widget.deleteFunction(widget.myIndex);
                 debugPrint("box deleted");
                 setState(() {});
               },
