@@ -38,22 +38,27 @@ class _HomePageState extends State<HomePage> {
       ),
       body: ListView.builder(
         itemBuilder: (context, index) {
-          return MyBox(tiles, index);
+          return MyBox(tiles, index, _deleteNote);
         },
         itemCount: tiles.length,
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
         onPressed: () => _addNote(),
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }
 
   void _addNote() {
     tiles.add("tile ${tiles.length + 1}");
-    print('Note Added');
+    debugPrint('Note Added');
+    setState(() {});
+  }
+
+  void _deleteNote(int index) {
+    tiles.removeAt(index);
     setState(() {});
   }
 }
