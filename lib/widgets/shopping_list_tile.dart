@@ -1,25 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:to_do_flutter/shoppingList.dart';
+import 'package:to_do_flutter/screens/shoppingList.dart';
 
-class MyBox extends StatefulWidget {
+class MyTile extends StatefulWidget {
   final List<String> myShoppingLists;
   final int myIndex;
   final Function(int) deleteFunction;
-  const MyBox(this.myShoppingLists, this.myIndex, this.deleteFunction,
+  const MyTile(this.myShoppingLists, this.myIndex, this.deleteFunction,
       {Key? key})
       : super(key: key);
 
   @override
-  State createState() => _MyBoxState();
+  State createState() => _MyTileState();
 }
 
-class _MyBoxState extends State<MyBox> {
+class _MyTileState extends State<MyTile> {
   List<TextEditingController> myControllers = [];
   final Color _boxColor = Colors.blueGrey;
 
   @override
   Widget build(BuildContext context) {
-    //myControllers = myControllers ?? [];
     return Container(
         child: Column(
       children: [
@@ -36,8 +35,6 @@ class _MyBoxState extends State<MyBox> {
                 borderRadius: BorderRadius.circular(10.0),
               ),
               child: InkWell(
-                splashFactory: InkSplash.splashFactory,
-                //splashColor: Colors.pink,
                 onTap: () {
                   Navigator.push(
                       context,

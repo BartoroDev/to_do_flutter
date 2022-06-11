@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'products.dart';
+import '../widgets/product.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MyShoppingList extends StatefulWidget {
