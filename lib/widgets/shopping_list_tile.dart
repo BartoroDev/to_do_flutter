@@ -1,25 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:to_do_flutter/shoppingList.dart';
+import 'package:to_do_flutter/screens/product_list.dart';
 
-class MyBox extends StatefulWidget {
-  final List<String> myShoppingLists;
+class MyTile extends StatefulWidget {
+  final String title;
   final int myIndex;
   final Function(int) deleteFunction;
-  const MyBox(this.myShoppingLists, this.myIndex, this.deleteFunction,
-      {Key? key})
+  const MyTile(this.title, this.myIndex, this.deleteFunction, {Key? key})
       : super(key: key);
 
   @override
-  State createState() => _MyBoxState();
+  State createState() => _MyTileState();
 }
 
-class _MyBoxState extends State<MyBox> {
-  List<TextEditingController> myControllers = [];
+class _MyTileState extends State<MyTile> {
   final Color _boxColor = Colors.blueGrey;
 
   @override
   Widget build(BuildContext context) {
-    //myControllers = myControllers ?? [];
     return Container(
         child: Column(
       children: [
@@ -35,20 +32,18 @@ class _MyBoxState extends State<MyBox> {
                 color: _boxColor,
                 borderRadius: BorderRadius.circular(10.0),
               ),
-              //podczas animacji rogi tego contenera też się animują, pomimo że ich tam ,,nie ma", jak to naprawic
               child: InkWell(
-                splashFactory: InkSplash.splashFactory,
-                //splashColor: Colors.pink,
                 onTap: () {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => MyShoppingList(myControllers)));
+                          builder: (context) =>
+                              MyShoppingList(listId: widget.myIndex)));
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Text(widget.myShoppingLists[widget.myIndex]),
+                    Text(widget.title),
                     const Icon(
                       Icons.edit,
                       size: 30,
@@ -61,7 +56,6 @@ class _MyBoxState extends State<MyBox> {
               onTap: () {
                 //in progress
                 widget.deleteFunction(widget.myIndex);
-                debugPrint("box deleted");
                 setState(() {});
               },
               child: const Icon(
