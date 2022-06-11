@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:to_do_flutter/screens/shoppingList.dart';
+import 'package:to_do_flutter/screens/product_list.dart';
 
 class MyTile extends StatefulWidget {
-  final List<String> myShoppingLists;
+  final String title;
   final int myIndex;
   final Function(int) deleteFunction;
-  const MyTile(this.myShoppingLists, this.myIndex, this.deleteFunction,
-      {Key? key})
+  const MyTile(this.title, this.myIndex, this.deleteFunction, {Key? key})
       : super(key: key);
 
   @override
@@ -14,7 +13,6 @@ class MyTile extends StatefulWidget {
 }
 
 class _MyTileState extends State<MyTile> {
-  List<TextEditingController> myControllers = [];
   final Color _boxColor = Colors.blueGrey;
 
   @override
@@ -39,12 +37,13 @@ class _MyTileState extends State<MyTile> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => MyShoppingList(myControllers)));
+                          builder: (context) =>
+                              MyShoppingList(listId: widget.myIndex)));
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Text(widget.myShoppingLists[widget.myIndex]),
+                    Text(widget.title),
                     const Icon(
                       Icons.edit,
                       size: 30,

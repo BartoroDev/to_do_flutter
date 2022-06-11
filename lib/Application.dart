@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:to_do_flutter/screens/home_page.dart';
+import 'package:to_do_flutter/screens/shopping_lists.dart';
 
 void main() {
   runApp(const MyApp());
