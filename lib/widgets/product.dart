@@ -20,43 +20,38 @@ class _ProductControllerState extends State<ProductController> {
 
   @override
   Widget build(BuildContext context) {
-    bool? value = widget.product.isChecked == 1 ? true : false;
-    return Container(
-      child: CheckboxListTile(
-        contentPadding: const EdgeInsets.all(10),
-        secondary: IconButton(
-            onPressed: () => widget.deleteProduct(widget.product.id!),
-            icon: const Icon(Icons.delete)),
-        controlAffinity: ListTileControlAffinity.leading,
-        title: TextField(
-          decoration: const InputDecoration(
-            hintText: 'Add new product',
-            border: InputBorder.none,
-          ),
-          controller: TextEditingController()..text = widget.product.name,
-          style: TextStyle(
-            fontSize: 22,
-            decoration: value ? TextDecoration.lineThrough : null,
-          ),
-          onSubmitted: (input) async {
-            dbController.updateProductName(widget.product.id!, input);
-          },
+    final bool value = widget.product.isChecked == 1 ? true : false;
+    return CheckboxListTile(
+      contentPadding: const EdgeInsets.all(10),
+      secondary: IconButton(
+          onPressed: () => widget.deleteProduct(widget.product.id!),
+          icon: const Icon(Icons.delete)),
+      controlAffinity: ListTileControlAffinity.leading,
+      title: TextField(
+        decoration: const InputDecoration(
+          hintText: 'Add new product',
+          border: InputBorder.none,
         ),
-        value: value,
-        onChanged: (newValue) async {
-          if (newValue == true) {
-            await dbController.updateProductCheck(widget.product.id!, 1);
-          } else {
-            await dbController.updateProductCheck(widget.product.id!, 0);
-          }
-          ProductData tmp =
-              await dbController.getOneProduct(widget.product.id!);
-          setState(() {
-            widget.product.name = tmp.name;
-            widget.product.isChecked = tmp.isChecked;
-          });
+        controller: TextEditingController()..text = widget.product.name,
+        style: TextStyle(
+          fontSize: 22,
+          decoration: value ? TextDecoration.lineThrough : null,
+        ),
+        onSubmitted: (input) async {
+          dbController.updateProductName(widget.product.id!, input);
         },
       ),
+      value: value,
+      onChanged: (newValue) async {
+        await dbController.updateProductCheck(
+            widget.product.id!, newValue == true ? 1 : 0);
+        final productData =
+            await dbController.getOneProduct(widget.product.id!);
+        setState(() {
+          widget.product.name = productData.name;
+          widget.product.isChecked = productData.isChecked;
+        });
+      },
     );
   }
 }

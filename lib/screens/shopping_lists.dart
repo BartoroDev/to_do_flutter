@@ -21,7 +21,7 @@ class _HomePageState extends State<HomePage> {
         title: const Text('Choose your list!'),
       ),
       body: FutureBuilder<List<ShoppingList>>(
-          initialData: [],
+          initialData: const [],
           future: dbController.getShoppingLists(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
@@ -48,8 +48,6 @@ class _HomePageState extends State<HomePage> {
 
   void _addNote() async {
     //TODO(mati): editable title of shopping list
-    int index =
-        await dbController.getShoppingLists().then((value) => value.length);
 
     await dbController.insertList(ShoppingList(title: 'New List'));
     setState(() {});

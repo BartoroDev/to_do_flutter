@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:to_do_flutter/data/database_controller.dart';
 import 'package:to_do_flutter/screens/shopping_lists.dart';
 
-void main() {
+Future<void> _initDatabase() async => DatabaseController().init();
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await _initDatabase();
   runApp(const MyApp());
 }
 

@@ -4,8 +4,8 @@ import 'package:to_do_flutter/screens/product_list.dart';
 class MyTile extends StatefulWidget {
   final String title;
   final int myIndex;
-  final Function(int) deleteFunction;
-  const MyTile(this.title, this.myIndex, this.deleteFunction, {Key? key})
+  final Function(int) onDelete;
+  const MyTile(this.title, this.myIndex, this.onDelete, {Key? key})
       : super(key: key);
 
   @override
@@ -17,8 +17,7 @@ class _MyTileState extends State<MyTile> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: Column(
+    return Column(
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -55,7 +54,7 @@ class _MyTileState extends State<MyTile> {
             GestureDetector(
               onTap: () {
                 //in progress
-                widget.deleteFunction(widget.myIndex);
+                widget.onDelete(widget.myIndex);
                 setState(() {});
               },
               child: const Icon(
@@ -67,6 +66,6 @@ class _MyTileState extends State<MyTile> {
         ),
         const SizedBox(height: 16),
       ],
-    ));
+    );
   }
 }

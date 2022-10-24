@@ -19,10 +19,10 @@ class _ShoppingListState extends State<MyShoppingList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add new products'),
+        title: const Text('Add new products'),
       ),
       body: FutureBuilder<List<ProductData>>(
-          initialData: [],
+          initialData: const [],
           future: dbController.getProducts(widget.listId),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
@@ -50,9 +50,6 @@ class _ShoppingListState extends State<MyShoppingList> {
   }
 
   void _addProduct() async {
-    int index = await dbController
-        .getProducts(widget.listId)
-        .then((value) => value.length);
     await dbController.insertProduct(
         ProductData(listId: widget.listId, name: '', isChecked: 0));
     setState(() {});
