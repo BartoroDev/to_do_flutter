@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:to_do_flutter/data/database_controller.dart';
 import 'package:to_do_flutter/screens/shopping_lists.dart';
+import 'package:to_do_flutter/shopping_list_name_cubit.dart';
 
 Future<void> _initDatabase() async => DatabaseController().init();
 
@@ -15,12 +17,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Shopping List App',
-      theme: ThemeData(
-        primarySwatch: Colors.teal,
+    return BlocProvider<ShoppingListNameCubit>(
+      create: (context) => ShoppingListNameCubit(),
+      child: MaterialApp(
+        title: 'Shopping List App',
+        theme: ThemeData(
+          primarySwatch: Colors.teal,
+        ),
+        home: const HomePage(),
       ),
-      home: const HomePage(),
     );
   }
 }
