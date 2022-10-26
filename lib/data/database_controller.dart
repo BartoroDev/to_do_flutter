@@ -37,6 +37,16 @@ class DatabaseController {
             title: shoppingListsMap[index]['title']));
   }
 
+  Future<String> getShoppingListName(int id) async {
+    final List<Map<String, dynamic>> ShoppingMap = await database.query(
+        'shoppingList',
+        distinct: true,
+        columns: ['title'],
+        where: 'id = ?',
+        whereArgs: [id]);
+    return ShoppingMap[id]['title'];
+  }
+
   Future<void> deleteShoppingList(int id) async {
     await database.delete('shoppingList', where: 'id = ?', whereArgs: [id]);
     await database.delete('productList', where: 'listId = ?', whereArgs: [id]);
