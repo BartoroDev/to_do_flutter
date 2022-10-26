@@ -68,7 +68,9 @@ class _MyTileState extends State<MyTile> {
                                         widget.myIndex, input);
                                     BlocProvider.of<ShoppingListNameCubit>(
                                             context)
-                                        .changeName(input);
+                                        .changeName(await dbController
+                                            .getShoppingListName(
+                                                widget.myIndex));
                                   },
                                 );
                               },
