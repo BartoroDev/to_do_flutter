@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:to_do_flutter/screens/product_list.dart';
-import 'package:to_do_flutter/shopping_list_name_cubit.dart';
 
 import '../data/database_controller.dart';
 
@@ -50,27 +48,19 @@ class _MyTileState extends State<MyTile> {
                         children: [
                           SizedBox(
                             width: MediaQuery.of(context).size.width * 0.3,
-                            child: BlocBuilder<ShoppingListNameCubit,
-                                ShoppingListNameState>(
-                              builder: (context, state) {
-                                return TextField(
-                                  decoration: const InputDecoration(
-                                    hintText: 'Shopping List',
-                                    border: InputBorder.none,
-                                  ),
-                                  controller: TextEditingController()
-                                    ..text = state.name,
-                                  style: const TextStyle(
-                                    fontSize: 22,
-                                  ),
-                                  onSubmitted: (input) async {
-                                    dbController.updateListTitle(
-                                        widget.myIndex, input);
-                                    BlocProvider.of<ShoppingListNameCubit>(
-                                            context)
-                                        .changeName(input);
-                                  },
-                                );
+                            child: TextField(
+                              decoration: const InputDecoration(
+                                hintText: 'Shopping List',
+                                border: InputBorder.none,
+                              ),
+                              controller: TextEditingController()
+                                ..text = widget.title,
+                              style: const TextStyle(
+                                fontSize: 22,
+                              ),
+                              onSubmitted: (input) async {
+                                dbController.updateListTitle(
+                                    widget.myIndex, input);
                               },
                             ),
                           ),
