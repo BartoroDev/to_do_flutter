@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:to_do_flutter/screens/product_list.dart';
+import 'package:to_do_flutter/shopping_list_cubit.dart';
 
 import '../data/database_controller.dart';
 
 class MyTile extends StatefulWidget {
   final String title;
   final int myIndex;
-  final Function(int) onDelete;
-  const MyTile(this.title, this.myIndex, this.onDelete, {Key? key})
-      : super(key: key);
+  const MyTile(this.title, this.myIndex, {Key? key}) : super(key: key);
 
   @override
   State createState() => _MyTileState();
@@ -73,7 +73,9 @@ class _MyTileState extends State<MyTile> {
               GestureDetector(
                 onTap: () {
                   //in progress
-                  widget.onDelete(widget.myIndex);
+                  context
+                      .read<ShoppingListCubit>()
+                      .deleteShoppingList(widget.myIndex);
                   setState(() {});
                 },
                 child: const Icon(
