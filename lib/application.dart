@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:to_do_flutter/data/database_controller.dart';
 import 'package:to_do_flutter/screens/shopping_lists.dart';
-import 'package:to_do_flutter/shopping_list_cubit.dart';
+import 'package:to_do_flutter/bloc/shopping_list_cubit.dart';
 
 Future<void> _initDatabase() async => DatabaseController().init();
 

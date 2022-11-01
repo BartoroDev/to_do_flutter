@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:to_do_flutter/bloc/product_list_cubit.dart';
 import 'package:to_do_flutter/screens/product_list.dart';
-import 'package:to_do_flutter/shopping_list_cubit.dart';
+import 'package:to_do_flutter/bloc/shopping_list_cubit.dart';
 
 import '../data/database_controller.dart';
 
 class MyTile extends StatefulWidget {
   final String title;
-  final int myIndex;
-  const MyTile(this.title, this.myIndex, {Key? key}) : super(key: key);
+  final int listId;
+  const MyTile({required this.title, required this.listId, Key? key})
+      : super(key: key);
 
   @override
   State createState() => _MyTileState();
@@ -40,8 +42,12 @@ class _MyTileState extends State<MyTile> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) =>
-                                  MyShoppingList(listId: widget.myIndex)));
+                              builder: (context) => BlocProvider(
+                                    create: (context) =>
+                                        ProductListCubit(listId: widget.listId)
+                                          ..getData(),
+                                    child: MyProductList(),
+                                  )));
                     },
                     child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -60,7 +66,7 @@ class _MyTileState extends State<MyTile> {
                               ),
                               onSubmitted: (input) async {
                                 dbController.updateListTitle(
-                                    widget.myIndex, input);
+                                    widget.listId, input);
                               },
                             ),
                           ),
@@ -75,7 +81,7 @@ class _MyTileState extends State<MyTile> {
                   //in progress
                   context
                       .read<ShoppingListCubit>()
-                      .deleteShoppingList(widget.myIndex);
+                      .deleteShoppingList(widget.listId);
                   setState(() {});
                 },
                 child: const Icon(

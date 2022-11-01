@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:to_do_flutter/data/database_controller.dart';
-import 'package:to_do_flutter/data/shopping_list_data.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../widgets/shopping_list_tile.dart';
-import '../shopping_list_cubit.dart';
+import '../bloc/shopping_list_cubit.dart';
+import '../data/shopping_list_data.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -13,8 +12,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  DatabaseController dbController = DatabaseController();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,8 +28,9 @@ class _HomePageState extends State<HomePage> {
                 padding: const EdgeInsets.all(16.0),
                 itemCount: state.shoppingListData.length,
                 itemBuilder: (context, index) {
-                  return MyTile(state.shoppingListData[index].title,
-                      state.shoppingListData[index].id!,
+                  return MyTile(
+                      title: state.shoppingListData[index].title,
+                      listId: state.shoppingListData[index].id!,
                       key: UniqueKey());
                 },
               );
