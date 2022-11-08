@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:to_do_flutter/data/database_controller.dart';
-import 'package:to_do_flutter/data/shopping_list_data.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../widgets/shopping_list_tile.dart';
+import '../bloc/shopping_list_cubit.dart';
+import '../data/shopping_list_data.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -12,49 +12,47 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  DatabaseController dbController = DatabaseController();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Choose your list!'),
       ),
-      body: FutureBuilder<List<ShoppingList>>(
-          initialData: const [],
-          future: dbController.getShoppingLists(),
-          builder: (context, snapshot) {
-            if (!snapshot.hasData) {
+      body: BlocBuilder<ShoppingListCubit, ShoppingListState>(
+        builder: (context, state) {
+          switch (state.dataState) {
+            case DataProcessingState.fetchingData:
               return const Center(child: CircularProgressIndicator());
-            } else {
+            case DataProcessingState.dataAccessed:
               return ListView.builder(
                 padding: const EdgeInsets.all(16.0),
-                itemCount: snapshot.data!.length,
+                itemCount: state.shoppingListData.length,
                 itemBuilder: (context, index) {
-                  return MyTile(snapshot.data![index].title,
-                      snapshot.data![index].id!, _deleteNote,
+                  return MyTile(
+                      title: state.shoppingListData[index].title,
+                      listId: state.shoppingListData[index].id!,
                       key: UniqueKey());
                 },
               );
-            }
-          }),
+            case DataProcessingState.idle:
+              return const Icon(Icons.air_rounded, size: 60);
+            case DataProcessingState.noConnection:
+              return Title(
+                  title: "No Internet Connection!",
+                  color: Colors.red,
+                  child: const Icon(
+                    Icons.signal_cellular_connected_no_internet_0_bar_rounded,
+                    size: 60,
+                    color: Colors.red,
+                  ));
+          }
+        },
+      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
-        onPressed: () => _addNote(),
+        onPressed: () => context.read<ShoppingListCubit>().addList(),
         child: const Icon(Icons.add),
       ),
     );
-  }
-
-  void _addNote() async {
-    //TODO(mati): editable title of shopping list
-
-    await dbController.insertList(ShoppingList(title: 'New List'));
-    setState(() {});
-  }
-
-  void _deleteNote(int index) async {
-    await dbController.deleteShoppingList(index);
-    setState(() {});
   }
 }

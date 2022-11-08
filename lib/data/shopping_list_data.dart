@@ -1,3 +1,5 @@
+enum DataProcessingState { noConnection, fetchingData, dataAccessed, idle }
+
 class ShoppingList {
   final int? id;
   String title;
